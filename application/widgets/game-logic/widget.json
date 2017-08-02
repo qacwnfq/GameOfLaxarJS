@@ -1,0 +1,10 @@
+{
+   "name": "game-logic",
+   "description": "",
+
+   "integration": {
+      "technology": "plain",
+      "type": "widget"
+   }
+}
+

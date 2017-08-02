@@ -1,0 +1,23 @@
+{
+   "layout": "one-column",
+
+   "areas": {
+      "axActivities": [
+         {
+            "widget": "game-logic"
+         }
+      ],
+
+      "header": [
+      ],
+
+      "content": [
+         {
+            "widget": "game"
+         }
+      ],
+
+      "footer": [
+      ]
+   }
+}

@@ -1,0 +1,9 @@
+{
+   "name": "game",
+   "description": "",
+
+   "integration": {
+      "technology": "vue",
+      "type": "widget"
+   }
+}

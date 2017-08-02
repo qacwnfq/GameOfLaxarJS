@@ -1,0 +1,9 @@
+{
+   "name": "canvas",
+   "description": "",
+
+   "integration": {
+      "technology": "plain",
+      "type": "widget"
+   }
+}
