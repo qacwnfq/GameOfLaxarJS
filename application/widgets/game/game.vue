@@ -10,7 +10,7 @@
       </div>
    -->
    <div>
-      <canvas v-if="board.length" width="400" height="400" v-paint="board" style="border:1px solid #000000;"></canvas>
+      <canvas v-on:click="onClick" v-if="board.length" width="400" height="400" v-paint="board" style="border:1px solid #000000;"></canvas>
    </div>
 </template>
 
@@ -20,19 +20,18 @@
  * Released under the MIT license
  * www.github.com/qacwnfq
  */
+   import settings from './settings';
    export default {
       data: () => ( { board: [] } ),
       directives: {
          paint: function( canvasElement, binding ){
-            const width = 400;
-            const height = 400;
+            const width = settings.width;
+            const height = settings.heigth;
             const ctx = canvasElement.getContext( "2d" );
             ctx.clearRect(0, 0, width, height );
             ctx.fillStyle = "#90EE90";
-            console.log( "OMGOMGOMGOMG" );
             const board = binding.value;
             if( board.length > 1 ) {
-               console.log( "OMGOMGOMGOMG" );
                const size_w = width / board.length;
                const size_h = height / board[0].length;
                for( let i=0; i<board.length; i++ ) {
@@ -43,16 +42,23 @@
                   }
                }
             }
-            console.log( "whaaat" );
             console.log( board );
-            //ctx.fillRect( 90, 90, 20, 20 );
          }
       },
-      created() {
-         this.eventBus.subscribe( 'didReplace.board', event => {
-            this.board = event.board;
-            console.log( this.board.length );
-         } );
-      }
-   };
+      methods: {
+         onClick: function( event ) {
+            event.clientX;
+            event.clientY;
+            x = index;
+            y = index;
+            this.eventBus.publish( 'didUpdate.board',  { x, y } );
+         }
+         },
+         created() {
+            this.eventBus.subscribe( 'didReplace.board', event => {
+               this.board = event.board;
+               console.log( this.board.length );
+            } );
+         }
+      };
 </script>
