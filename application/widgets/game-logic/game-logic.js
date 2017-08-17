@@ -3,7 +3,7 @@
  * Released under the MIT license
  * www.github.com/qacwnfq
  */
-const board = [ ...fixedArray().keys() ].map( fixedArray );
+let board = [ ...fixedArray().keys() ].map( fixedArray );
 
 export const injections = [ 'axEventBus' ];
 export function create( eventBus ) {
@@ -24,9 +24,10 @@ export function create( eventBus ) {
       eventBus.publish( 'didReplace.board', { board } );
    } );
    eventBus.subscribe( 'didClick.board', event => {
+      console.log( 'click' );
       board[ event.x ][ event.y ] = !board[ event.x ][ event.y ];
-      eventBus.publish( 'didReplace.board', { board } );
    } );
+   eventBus.publish( 'didReplace.board', { board } );
 }
 
 
