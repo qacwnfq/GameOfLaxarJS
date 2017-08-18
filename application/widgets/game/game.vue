@@ -20,10 +20,23 @@
  * Released under the MIT license
  * www.github.com/qacwnfq
  */
+//TODO remove v-paint directive and just  callback redraw in create subscribe.
    export default {
-      data: () => ( { board: [] } ),
+      props: {
+         board: {
+            type: Array,
+            default: function() { return []; }
+         }
+      },
+      data: () => this.board,
+      watch: {
+         board: function(newBoard) {
+            return newBoard;
+         }
+      },
       directives: {
          paint: function( canvasElement, binding ){
+            console.log( 'paint' );
             redraw( canvasElement, binding );
          }
       },
@@ -36,9 +49,12 @@
             const size_h = height / 50;
             const x = Math.floor( ( (event.clientX - canvasElement.offsetLeft ) / size_w) % 50 );
             const y = Math.floor(( ( event.clientY - canvasElement.offsetTop ) / size_h ) % 50 );
-            // this.eventBus.publish( 'didClick.board',  { x, y } );
+            this.eventBus.publish( 'didClick.board',  { x, y } );
             this.board[x][y] = !this.board[x][y];
-            redraw( canvasElement, {value: this.board} );
+            this.eventBus.subscribe( 'didReplace.board', event => {
+               this.board = event.board;
+               redraw( canvasElement, { 'value': this.board } );
+            } );
          }
       },
       created() {
@@ -49,14 +65,15 @@
    };
 
    function redraw( canvasElement, binding ){
-      console.log( 'redraw' );
       const width = 800.;
       const height = 800.;
       const ctx = canvasElement.getContext( "2d" );
       ctx.clearRect(0, 0, width, height );
       ctx.fillStyle = "#90EE90";
+      console.log( 'got board' );
       const board = binding.value;
       if( board.length > 1 ) {
+         console.log( 'got board2' );
          const size_w = width / board.length;
          const size_h = height / board[0].length;
          for( let i=0; i<board.length; i++ ) {
